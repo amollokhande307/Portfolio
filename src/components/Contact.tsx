@@ -5,7 +5,7 @@ interface ContactProps {
   isDarkMode: boolean;
 }
 
-const Contact: React.FC<ContactProps> = ({ isDarkMode }: ContactProps) => {
+const Contact: React.FC<ContactProps> = ({ isDarkMode }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',

@@ -5,7 +5,7 @@ interface ResumeProps {
   isDarkMode: boolean;
 }
 
-const Resume: React.FC<ResumeProps> = ({ isDarkMode }: ResumeProps) => {
+const Resume: React.FC<ResumeProps> = ({ isDarkMode }) => {
   const education = {
     degree: 'Bachelor of Computer Science (BCS)',
     university: 'MGM University',
@@ -15,78 +15,23 @@ const Resume: React.FC<ResumeProps> = ({ isDarkMode }: ResumeProps) => {
   };
 
   const portfolioProjects = [
-    // Only include projects that are present in Projects.tsx
     {
-      title: 'College Student Info',
-      period: '2024',
-      description: 'Student profile management system with advanced data handling and intuitive user interface for educational institutions.',
-      technologies: ['Python', 'Data Management', 'UI/UX']
+      title: 'Enterprise Cloud Solutions',
+      period: '', // Remove date
+      description: 'Developed containerized applications using Docker and Kubernetes with AWS cloud infrastructure.',
+      technologies: ['Docker', 'Kubernetes', 'AWS', 'Linux']
     },
     {
-      title: 'WhatsApp Message Sender',
-      period: '2024',
-      description: 'Enterprise-grade automated messaging solution with bulk sending capabilities and delivery tracking.',
-      technologies: ['Python', 'Automation', 'WhatsApp API']
+      title: 'AI & Automation Tools',
+      period: '',
+      description: 'Built AI-powered banking assistant and automation tools for communication platforms.',
+      technologies: ['Python', 'AI/ML', 'APIs', 'Automation']
     },
     {
-      title: 'Email Sender App',
-      period: '2024',
-      description: 'Professional email automation platform with template management, scheduling, and analytics dashboard.',
-      technologies: ['Python', 'SMTP', 'Automation', 'Templates']
-    },
-    {
-      title: 'Twilio Communication App',
-      period: '2024',
-      description: 'Multi-channel communication hub integrating SMS, voice calls, and messaging with advanced routing.',
-      technologies: ['Python', 'Twilio API', 'Communication', 'Voice']
-    },
-    {
-      title: 'Instagram Messenger',
-      period: '2024',
-      description: 'Intelligent Instagram automation bot with content scheduling and engagement analytics.',
-      technologies: ['Python', 'Instagram API', 'Bot', 'Analytics']
-    },
-    {
-      title: 'Twitter Client (Tweepy)',
-      period: '2024',
-      description: 'Advanced Twitter management tool with sentiment analysis and automated engagement features.',
-      technologies: ['Python', 'Tweepy', 'Social Media', 'ML']
-    },
-    {
-      title: 'All-in-One Communication App',
-      period: '2024',
-      description: 'Unified communication platform integrating multiple messaging services with centralized management.',
-      technologies: ['Python', 'Multi-platform', 'Integration', 'Dashboard']
-    },
-    {
-      title: 'System RAM Monitor',
-      period: '2024',
-      description: 'Real-time system performance monitoring with alerting, logging, and predictive analytics.',
-      technologies: ['Python', 'System Monitoring', 'Performance', 'Alerts']
-    },
-    {
-      title: 'Apache Web Server',
-      period: '2024',
-      description: 'Production-ready containerized Apache deployment with SSL, load balancing, and auto-scaling.',
-      technologies: ['Docker', 'Apache', 'DevOps', 'SSL']
-    },
-    {
-      title: 'Docker-in-Docker (DinD)',
-      period: '2024',
-      description: 'Advanced containerization setup enabling nested Docker environments for CI/CD pipelines.',
-      technologies: ['Docker', 'DinD', 'CI/CD', 'Orchestration']
-    },
-    {
-      title: 'Flask Inside Docker',
-      period: '2024',
-      description: 'Containerized Flask application with multi-stage builds, health checks, and production optimization.',
-      technologies: ['Docker', 'Flask', 'Python', 'Multi-stage']
-    },
-    {
-      title: 'AI-Powered Banking Assistant',
-      period: '2024',
-      description: 'Intelligent banking chatbot with NLP capabilities for customer service and financial advisory.',
-      technologies: ['AI', 'NLP', 'Banking', 'Chatbot']
+      title: 'Full Stack Web Applications',
+      period: '', // Remove date
+      description: 'Created responsive web applications with real-time features and modern JavaScript.',
+      technologies: ['JavaScript', 'HTML/CSS', 'Flask', 'Streamlit']
     }
   ];
 
@@ -218,7 +163,13 @@ const Resume: React.FC<ResumeProps> = ({ isDarkMode }: ResumeProps) => {
                         </h4>
                         <div className={`text-sm font-medium mb-3 ${
                           isDarkMode ? 'text-blue-400' : 'text-blue-600'
-                        }`}>
+                        }`} style={{
+                          maxHeight: project.period ? 40 : 0,
+                          opacity: project.period ? 1 : 0,
+                          overflow: 'hidden',
+                          transition: 'max-height 0.4s cubic-bezier(0.28,0.11,0.32,1), opacity 0.4s cubic-bezier(0.28,0.11,0.32,1)',
+                          willChange: 'height, opacity'
+                        }}>
                           {project.period}
                         </div>
                         <p className={`text-sm leading-relaxed mb-4 ${

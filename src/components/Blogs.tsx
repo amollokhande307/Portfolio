@@ -16,13 +16,20 @@ interface BlogPost {
     comments?: number;
     shares?: number;
   };
+  // Custom fields for UI
+  whitepaper?: boolean;
+  badge?: string;
+  cisBenchmark?: boolean;
+  checklist?: boolean;
+  dbDiagram?: boolean;
+  perfChart?: boolean;
 }
 
 interface BlogsProps {
   isDarkMode: boolean;
 }
 
-const Blogs: React.FC<BlogsProps> = ({ isDarkMode }: BlogsProps) => {
+const Blogs: React.FC<BlogsProps> = ({ isDarkMode }) => {
   const [hoveredPost, setHoveredPost] = useState<string | null>(null);
 
   const blogPosts: BlogPost[] = [
@@ -91,7 +98,91 @@ const Blogs: React.FC<BlogsProps> = ({ isDarkMode }: BlogsProps) => {
       icon: '🔒',
       engagement: '1.9K views',
       metrics: { views: '1.9K', likes: 71, comments: 16, shares: 11 }
-    }
+    },
+    {
+      title: '5 GUI Programs in Linux',
+      description: 'A curated list of essential GUI applications for productivity and system management on Linux desktops.',
+      linkedinUrl: 'https://www.linkedin.com/posts/amol-lokhande-382976361_5-gui-programs-in-linux-activity-7348998616750927872-1xbL',
+      date: 'Jan 2025',
+      readTime: '7 min read',
+      category: 'Systems',
+      icon: '🖥️',
+      engagement: '1.2K views',
+      metrics: { views: '1.2K', likes: 45, comments: 10, shares: 7 }
+    },
+    {
+      title: 'Add More Terminals & GUI Interfaces',
+      description: 'How to enhance your Linux workflow by adding more terminal emulators and GUI interfaces for multitasking.',
+      linkedinUrl: 'https://www.linkedin.com/posts/amol-lokhande-382976361_add-more-terminals-gui-interfaces-activity-7348998616750927872-1xbL',
+      date: 'Jan 2025',
+      readTime: '6 min read',
+      category: 'Systems',
+      icon: '🖲️',
+      engagement: '1.0K views',
+      metrics: { views: '1.0K', likes: 38, comments: 8, shares: 5 }
+    },
+    {
+      title: 'Linux Customization Pro Tip',
+      description: 'Advanced tips for customizing your Linux desktop environment for maximum efficiency and aesthetics.',
+      linkedinUrl: 'https://www.linkedin.com/posts/amol-lokhande-382976361_linux-customization-pro-tip-activity-7348998616750927872-1xbL',
+      date: 'Jan 2025',
+      readTime: '5 min read',
+      category: 'Systems',
+      icon: '💡',
+      engagement: '900 views',
+      metrics: { views: '900', likes: 30, comments: 6, shares: 4 }
+    },
+    {
+      title: 'AWS Cloud Begins with AWS Neptune',
+      description: 'A technical overview of AWS Neptune and its role in building scalable, graph-based cloud applications.',
+      linkedinUrl: 'https://www.linkedin.com/posts/amol-lokhande-382976361_aws-cloud-begins-with-aws-neptune-activity-7348998616750927872-1xbL',
+      date: 'Feb 2025',
+      readTime: '8 min read',
+      category: 'Cloud',
+      icon: '🌐',
+      engagement: '1.5K views',
+      metrics: { views: '1.5K', likes: 52, comments: 12, shares: 8 }
+    },
+    {
+      title: 'Enterprise Linux Adoption',
+      description: 'How Fortune 500s deploy Linux at scale: security, reliability, and cost efficiency in the enterprise.',
+      linkedinUrl: 'https://www.linkedin.com/posts/enterprise-linux-adoption',
+      date: 'Mar 2025',
+      readTime: '9 min read',
+      category: 'Systems',
+      icon: '🏢',
+      engagement: '4.8K views',
+      metrics: { views: '4.8K', likes: 210, comments: 54, shares: 32 },
+      // Custom fields for UI
+      whitepaper: true,
+      badge: 'LinkedIn Engagement',
+    },
+    {
+      title: 'Docker Security Practices',
+      description: 'CIS benchmark compliance, vulnerability scanning, and a hands-on security checklist for production Docker.',
+      linkedinUrl: 'https://www.linkedin.com/posts/docker-security-practices',
+      date: 'Mar 2025',
+      readTime: '8 min read',
+      category: 'DevOps',
+      icon: '🛡️',
+      engagement: '3.9K views',
+      metrics: { views: '3.9K', likes: 180, comments: 41, shares: 27 },
+      cisBenchmark: true,
+      checklist: true,
+    },
+    {
+      title: 'AWS Neptune Introduction',
+      description: 'A deep dive into AWS Neptune: graph database architecture, performance, and real-world use cases.',
+      linkedinUrl: 'https://www.linkedin.com/posts/aws-neptune-introduction',
+      date: 'Mar 2025',
+      readTime: '10 min read',
+      category: 'Cloud',
+      icon: '🧬',
+      engagement: '2.7K views',
+      metrics: { views: '2.7K', likes: 99, comments: 22, shares: 14 },
+      dbDiagram: true,
+      perfChart: true,
+    },
   ];
 
   const categories = [...new Set(blogPosts.map(post => post.category))];
@@ -123,15 +214,6 @@ const Blogs: React.FC<BlogsProps> = ({ isDarkMode }: BlogsProps) => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-[#232F3E] to-[#007FFF] bg-clip-text text-transparent">
-              📚 Blog
-            </span>
-          </h2>
-          {/* Remove metrics/analytics grid and summary paragraph */}
-        </div>
-
         {/* Blog Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post, index) => (
@@ -222,6 +304,44 @@ const Blogs: React.FC<BlogsProps> = ({ isDarkMode }: BlogsProps) => {
                       <div className="text-green-500 font-bold text-sm">{post.metrics.shares}</div>
                       <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Shares</div>
                     </div>
+                  </div>
+                )}
+
+                {/* LinkedIn engagement badge for whitepaper articles */}
+                {post.whitepaper && (
+                  <div className="mb-2 flex items-center gap-2">
+                    <span className="px-2 py-1 rounded bg-[#0077B5] text-white font-bold text-xs" style={{ willChange: 'transform, opacity' }}>LinkedIn Engagement: {post.engagement}</span>
+                  </div>
+                )}
+                {/* CIS benchmark visualization for Docker Security Practices */}
+                {post.cisBenchmark && (
+                  <div className="mb-2 flex items-center gap-2">
+                    <span className="px-2 py-1 rounded bg-[#FF9900] text-white font-bold text-xs" style={{ willChange: 'transform, opacity' }}>CIS Benchmark</span>
+                    <span className="px-2 py-1 rounded bg-green-500 text-white font-bold text-xs" style={{ willChange: 'transform, opacity' }}>Compliant</span>
+                  </div>
+                )}
+                {/* Interactive security checklist for Docker Security Practices */}
+                {post.checklist && (
+                  <div className="mb-2 p-2 rounded bg-[#F3F4F6] text-xs text-gray-700 shadow-sm" style={{ willChange: 'transform, opacity' }}>
+                    <ul className="list-disc pl-4">
+                      <li>Image scanning enabled</li>
+                      <li>Least privilege containers</li>
+                      <li>Secrets managed securely</li>
+                    </ul>
+                  </div>
+                )}
+                {/* Database architecture diagram for AWS Neptune Introduction */}
+                {post.dbDiagram && (
+                  <div className="mb-2 flex flex-col items-center">
+                    <img src="/placeholder-db-diagram.png" alt="Database Architecture Diagram" style={{ width: 120, height: 80, objectFit: 'cover', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                    <span className="text-xs text-gray-400 mt-1" style={{ fontFamily: 'IBM Plex Mono, monospace' }}>DB Architecture</span>
+                  </div>
+                )}
+                {/* Performance comparison chart for AWS Neptune Introduction */}
+                {post.perfChart && (
+                  <div className="mb-2 flex flex-col items-center">
+                    <img src="/placeholder-perf-chart.png" alt="Performance Comparison Chart" style={{ width: 120, height: 60, objectFit: 'cover', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                    <span className="text-xs text-gray-400 mt-1" style={{ fontFamily: 'IBM Plex Mono, monospace' }}>Performance Chart</span>
                   </div>
                 )}
 

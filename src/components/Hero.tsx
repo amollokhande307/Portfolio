@@ -5,7 +5,7 @@ interface HeroProps {
   isDarkMode: boolean;
 }
 
-const Hero: React.FC<HeroProps> = ({ isDarkMode }: HeroProps) => {
+const Hero: React.FC<HeroProps> = ({ isDarkMode }) => {
   const [typedText, setTypedText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const [currentPhase, setCurrentPhase] = useState(0);
@@ -66,12 +66,21 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode }: HeroProps) => {
     {
       icon: <Server size={20} />,
       url: 'https://www.instagram.com/amol_lokhande_02',
-      label: 'Infrastructure',
-      description: 'Server Monitoring',
+      label: 'Instagram',
+      description: 'Instagram',
       color: 'hover:bg-gradient-to-r from-purple-500 to-pink-500',
       animation: 'animate-pulse'
     }
   ];
+
+  // Add Amazon Ember font CDN to the document head if not present
+  if (typeof window !== 'undefined' && !document.getElementById('amazon-ember-font')) {
+    const link = document.createElement('link');
+    link.id = 'amazon-ember-font';
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.cdnfonts.com/css/amazon-ember';
+    document.head.appendChild(link);
+  }
 
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden">
@@ -165,12 +174,26 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode }: HeroProps) => {
 
         {/* Name with Typing Animation */}
         <div className="mb-6">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-2">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-2" style={{ fontFamily: 'Amazon Ember, IBM Plex Mono, monospace' }}>
             <span className="bg-gradient-to-r from-[#232F3E] via-[#007FFF] to-[#FF9900] bg-clip-text text-transparent">
               Amol Lokhande
             </span>
           </h1>
-          
+          {/* Infrastructure Header (AWS Console Style) */}
+          <div
+            className="text-2xl font-bold mb-4 flex items-center justify-center"
+            style={{
+              fontFamily: 'Amazon Ember, IBM Plex Mono, monospace',
+              color: isDarkMode ? '#0073BB' : '#232F3E',
+              letterSpacing: '0.01em',
+              transition: 'opacity 0.3s cubic-bezier(0.28, 0.11, 0.32, 1), transform 0.3s cubic-bezier(0.28, 0.11, 0.32, 1)',
+              willChange: 'opacity, transform',
+              opacity: 1,
+              transform: 'translateY(0)'
+            }}
+          >
+            Infrastructure
+          </div>
           {/* CLI-style role output */}
           <div className={`font-mono text-lg md:text-xl p-3 rounded border-l-4 border-[#007FFF] ${
             isDarkMode ? 'bg-slate-800 text-gray-300' : 'bg-gray-100 text-gray-700'
@@ -242,7 +265,7 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode }: HeroProps) => {
       </div>
 
       {/* Matrix Rain CSS */}
-      <style>{`
+      <style jsx>{`
         .matrix-rain {
           position: absolute;
           top: 0;

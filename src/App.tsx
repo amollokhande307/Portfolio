@@ -7,10 +7,11 @@ import Projects from './components/Projects';
 import Blogs from './components/Blogs';
 import Resume from './components/Resume';
 import Contact from './components/Contact';
+import CustomCursor from './components/CustomCursor';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isDarkMode, setIsDarkMode] = useState(true); // Set dark mode as default
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -52,6 +53,7 @@ function App() {
         ? 'bg-slate-900 text-white' 
         : 'bg-gradient-to-br from-blue-50 via-white to-purple-50 text-gray-900'
     }`}>
+      <CustomCursor />
       {/* Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isDarkMode ? 'bg-slate-800/90' : 'bg-white/90'

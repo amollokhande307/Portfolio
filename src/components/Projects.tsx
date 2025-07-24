@@ -8,13 +8,24 @@ interface Project {
   githubUrl?: string;
   linkedinUrl: string;
   tags: string[];
-  icon: string;
+  icon: string | React.ReactNode;
   status?: 'PROD' | 'DEV';
   metrics?: {
     stars?: number;
     forks?: number;
     engagement?: string;
   };
+  // Custom fields for UI
+  archDiagram?: string;
+  linkedinPreview?: string;
+  codeSnippet?: string;
+  perfMetrics?: string;
+  workflowDiagram?: string;
+  s3Badge?: boolean;
+  videoPreview?: string;
+  geoApi?: boolean;
+  mobilePreview?: string;
+  codeQuality?: string;
 }
 
 interface ProjectsProps {
@@ -24,6 +35,18 @@ interface ProjectsProps {
 const Projects: React.FC<ProjectsProps> = ({ isDarkMode }) => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [animatingCards, setAnimatingCards] = useState<number[]>([]);
+
+  // Add Docker whale SVG for DinD
+  const DockerWhaleSVG = () => (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="4" y="20" width="24" height="6" rx="3" fill="#2496ED"/>
+      <rect x="8" y="14" width="4" height="4" fill="#fff"/>
+      <rect x="14" y="14" width="4" height="4" fill="#fff"/>
+      <rect x="20" y="14" width="4" height="4" fill="#fff"/>
+      <ellipse cx="16" cy="28" rx="12" ry="2" fill="#00A1F1" opacity="0.2"/>
+      <circle cx="26" cy="18" r="3" fill="#2496ED"/>
+    </svg>
+  );
 
   const projects: Project[] = [
     // Python Projects
@@ -128,13 +151,14 @@ const Projects: React.FC<ProjectsProps> = ({ isDarkMode }) => {
       metrics: { stars: 15, forks: 8, engagement: '1.8K views' }
     },
     {
-      title: 'Docker-in-Docker (DinD)',
+      title: 'Docker in Docker (DinD)',
       description: 'Advanced containerization setup enabling nested Docker environments for CI/CD pipelines.',
       category: 'Docker',
-      githubUrl: '#',
-      linkedinUrl: '#',
+      githubUrl: undefined,
+      linkedinUrl: 'https://www.linkedin.com/posts/amol-lokhande-382976361_devops-docker-dind-activity-7350381049182392321-ZTwX',
       tags: ['Docker', 'DinD', 'CI/CD', 'Orchestration'],
-      icon: '🔄',
+      // Use Docker whale SVG
+      icon: <DockerWhaleSVG />,
       status: 'PROD',
       metrics: { engagement: 'Enterprise Solution' }
     },
@@ -142,12 +166,15 @@ const Projects: React.FC<ProjectsProps> = ({ isDarkMode }) => {
       title: 'Flask Inside Docker',
       description: 'Containerized Flask application with multi-stage builds, health checks, and production optimization.',
       category: 'Docker',
-      githubUrl: '#',
-      linkedinUrl: '#',
+      githubUrl: undefined,
+      linkedinUrl: 'https://www.linkedin.com/posts/amol-lokhande-382976361_devops-docker-flask-activity-7350381049182392321-ZTwX',
       tags: ['Docker', 'Flask', 'Python', 'Multi-stage'],
       icon: '🌶️',
       status: 'PROD',
-      metrics: { engagement: 'Best Practices' }
+      metrics: { engagement: 'Best Practices' },
+      // Custom fields for UI
+      archDiagram: '/placeholder-architecture.png', // Placeholder image path
+      linkedinPreview: 'See how Flask, Docker, and Python combine for robust deployments.'
     },
     // AI Projects
     {
@@ -165,15 +192,18 @@ const Projects: React.FC<ProjectsProps> = ({ isDarkMode }) => {
       title: 'AI-Powered Multi-Tech Tool',
       description: 'Comprehensive AI toolkit integrating machine learning models for automated problem-solving.',
       category: 'AI',
-      githubUrl: '#',
-      linkedinUrl: '#',
+      githubUrl: 'https://github.com/amollokhande307/summer-internship-/blob/main/manubase.py',
+      linkedinUrl: 'https://www.linkedin.com/posts/amol-lokhande-382976361_my-first-ai-powered-multi-tech-tool-activity-7346942613884698624-nqnB',
       tags: ['AI', 'Machine Learning', 'Automation', 'Multi-platform'],
       icon: '🧠',
       status: 'DEV',
-      metrics: { engagement: 'Research Phase' }
+      metrics: { engagement: 'Research Phase' },
+      // Custom fields for UI
+      codeSnippet: `def solve_problem(input):\n    # AI logic here\n    return model.predict(input)`,
+      perfMetrics: 'Accuracy: 98% | Latency: 45ms'
     },
     {
-      title: 'Stock Market Predictor',
+      title: 'Stock Market Viewer',
       description: 'Advanced ML model for financial forecasting using historical data and market sentiment analysis.',
       category: 'AI',
       githubUrl: '#',
@@ -199,23 +229,31 @@ const Projects: React.FC<ProjectsProps> = ({ isDarkMode }) => {
       title: 'Video Recording + Email System',
       description: 'Integrated platform for video capture, processing, compression, and automated email distribution.',
       category: 'Fullstack',
-      githubUrl: '#',
-      linkedinUrl: '#',
+      githubUrl: 'https://github.com/amollokhande307/summer-internship-/blob/main/Video%20Recording.html',
+      linkedinUrl: 'https://www.linkedin.com/posts/amol-lokhande-382976361_webdevelopment-javascript-html-activity-7351210348974080000-rfTy',
       tags: ['JavaScript', 'Video Processing', 'Email', 'WebRTC'],
       icon: '🎥',
       status: 'PROD',
-      metrics: { engagement: 'Media Solution' }
+      metrics: { engagement: 'Media Solution' },
+      // Custom fields for UI
+      workflowDiagram: '/placeholder-workflow.png', // Placeholder image path
+      s3Badge: true,
+      videoPreview: '/placeholder-video-preview.png'
     },
     {
       title: 'Grocery Store Finder',
       description: 'Location-based grocery discovery app with inventory tracking, price comparison, and delivery integration.',
       category: 'Fullstack',
-      githubUrl: '#',
-      linkedinUrl: '#',
+      githubUrl: 'https://github.com/amollokhande307/summer-internship-/blob/main/Grocery%20Store.html',
+      linkedinUrl: 'https://www.linkedin.com/posts/amol-lokhande-382976361_webdevelopment-javascript-html-activity-7351210348974080000-rfTy',
       tags: ['React', 'Maps API', 'Database', 'E-commerce'],
       icon: '🛒',
       status: 'DEV',
-      metrics: { engagement: 'MVP Ready' }
+      metrics: { engagement: 'MVP Ready' },
+      // Custom fields for UI
+      geoApi: true,
+      mobilePreview: '/placeholder-mobile-preview.png',
+      codeQuality: 'A+'
     }
   ];
 
@@ -351,7 +389,7 @@ const Projects: React.FC<ProjectsProps> = ({ isDarkMode }) => {
           {filteredProjects.map((project, index) => (
             <div
               key={project.title}
-              className={`group relative rounded-xl overflow-hidden transition-all duration-500 hover:scale-105 hover:-translate-y-2 ${
+              className={`project-card group relative rounded-xl overflow-hidden transition-all duration-500 hover:scale-105 hover:-translate-y-2 ${
                 animatingCards.includes(index) ? 'animate-pulse' : ''
               } ${
                 isDarkMode 
@@ -400,7 +438,7 @@ const Projects: React.FC<ProjectsProps> = ({ isDarkMode }) => {
 
                 <h3 className={`text-xl font-bold mb-3 group-hover:text-[#007FFF] transition-colors duration-300 ${
                   isDarkMode ? 'text-white' : 'text-gray-800'
-                }`}>
+                }`} style={{ fontFamily: 'Amazon Ember, IBM Plex Mono, monospace', transition: 'opacity 0.3s cubic-bezier(0.28,0.11,0.32,1), transform 0.3s cubic-bezier(0.28,0.11,0.32,1)', willChange: 'opacity, transform', opacity: 1, transform: 'translateY(0)' }}>
                   {project.title}
                 </h3>
 
@@ -452,33 +490,86 @@ const Projects: React.FC<ProjectsProps> = ({ isDarkMode }) => {
                   </div>
                 )}
 
+                {/* LinkedIn badge for DinD */}
+                {project.title === 'Docker in Docker (DinD)' && (
+                  <div className="flex items-center gap-2 mb-2">
+                    <a href={project.linkedinUrl} target="_blank" rel="noopener" className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-[#0077B5] text-white shadow transition-all duration-300 hover:scale-105" style={{ willChange: 'transform, opacity' }}>
+                      <Linkedin size={14} className="mr-1" />
+                      View on LinkedIn
+                    </a>
+                    <span className="ml-2 px-2 py-1 rounded bg-[#232F3E] text-[#00A1F1] font-mono text-xs" style={{ willChange: 'transform, opacity' }}>{project.metrics?.engagement}</span>
+                  </div>
+                )}
+
+                {/* GitHub code viewer for AI-Powered Multi-Tech Tool */}
+                {project.title === 'AI-Powered Multi-Tech Tool' && (
+                  <div className="mb-2">
+                    <div className="rounded bg-[#232F3E] text-[#00A1F1] text-xs font-mono p-3 overflow-x-auto shadow-inner" style={{ maxHeight: 90, fontFamily: 'IBM Plex Mono, monospace', willChange: 'transform, opacity' }}>
+                      <pre style={{ margin: 0 }}>{project.codeSnippet}</pre>
+                    </div>
+                  </div>
+                )}
+                {/* Performance metrics badge for AI-Powered Multi-Tech Tool */}
+                {project.title === 'AI-Powered Multi-Tech Tool' && (
+                  <div className="mb-2 flex items-center gap-2">
+                    <span className="px-2 py-1 rounded bg-[#00A1F1] text-white font-bold text-xs" style={{ willChange: 'transform, opacity' }}>{project.perfMetrics}</span>
+                  </div>
+                )}
+
                 {/* Action Buttons */}
                 <div className="flex gap-3">
-                  {project.githubUrl && project.githubUrl !== '#' && (
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 group/btn ${
-                        isDarkMode 
-                          ? 'bg-slate-700 hover:bg-slate-600 text-white border border-slate-600' 
-                          : 'bg-gray-800 hover:bg-gray-700 text-white'
-                      }`}
-                    >
-                      <Github size={16} className="group-hover/btn:rotate-12 transition-transform duration-300" />
-                      <span className="text-sm">Repository</span>
-                    </a>
-                  )}
-                  {project.linkedinUrl && project.linkedinUrl !== '#' && (
-                    <a
-                      href={project.linkedinUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 group/btn bg-[#0077B5] hover:bg-[#005885] text-white"
-                    >
-                      <Linkedin size={16} className="group-hover/btn:scale-110 transition-transform duration-300" />
-                      <span className="text-sm">Article</span>
-                    </a>
+                  {project.title === 'AI-Powered Multi-Tech Tool' ? (
+                    <>
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener"
+                        className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-bold transition-all duration-300 hover:scale-105 bg-[#232F3E] text-white shadow-lg"
+                        style={{ fontFamily: 'Amazon Ember, IBM Plex Mono, monospace', willChange: 'transform, opacity' }}
+                      >
+                        <Github size={16} />
+                        <span>View Code</span>
+                      </a>
+                      <a
+                        href={project.linkedinUrl}
+                        target="_blank"
+                        rel="noopener"
+                        className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-bold transition-all duration-300 hover:scale-105 bg-[#0077B5] text-white shadow-lg"
+                        style={{ fontFamily: 'Amazon Ember, IBM Plex Mono, monospace', willChange: 'transform, opacity' }}
+                      >
+                        <Linkedin size={16} />
+                        <span>LinkedIn</span>
+                      </a>
+                    </>
+                  ) : (
+                    <>
+                      {project.githubUrl && project.githubUrl !== '#' && (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 group/btn ${
+                            isDarkMode 
+                              ? 'bg-slate-700 hover:bg-slate-600 text-white border border-slate-600' 
+                              : 'bg-gray-800 hover:bg-gray-700 text-white'
+                          }`}
+                        >
+                          <Github size={16} className="group-hover/btn:rotate-12 transition-transform duration-300" />
+                          <span className="text-sm">Repository</span>
+                        </a>
+                      )}
+                      {project.linkedinUrl && project.linkedinUrl !== '#' && (
+                        <a
+                          href={project.linkedinUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 group/btn bg-[#0077B5] hover:bg-[#005885] text-white"
+                        >
+                          <Linkedin size={16} className="group-hover/btn:scale-110 transition-transform duration-300" />
+                          <span className="text-sm">Article</span>
+                        </a>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
@@ -498,6 +589,57 @@ const Projects: React.FC<ProjectsProps> = ({ isDarkMode }) => {
                   {project.status === 'PROD' ? 'DEPLOYED' : 'BUILDING'}
                 </div>
               </div>
+
+                {/* Architecture diagram thumbnail for Flask Inside Docker */}
+                {project.title === 'Flask Inside Docker' && (
+                  <div className="flex flex-col items-center mb-2">
+                    <img src={project.archDiagram || '/placeholder-architecture.png'} alt="Architecture Diagram" style={{ width: 120, height: 80, objectFit: 'cover', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                    <span className="text-xs text-gray-400 mt-1" style={{ fontFamily: 'IBM Plex Mono, monospace' }}>Architecture Diagram</span>
+                  </div>
+                )}
+                {/* LinkedIn post preview snippet for Flask Inside Docker */}
+                {project.title === 'Flask Inside Docker' && (
+                  <div className="mb-2 px-3 py-2 rounded bg-[#F3F4F6] text-xs text-gray-700 shadow-sm" style={{ willChange: 'transform, opacity', fontFamily: 'IBM Plex Mono, monospace' }}>
+                    {project.linkedinPreview}
+                  </div>
+                )}
+                {/* System workflow diagram for Video Recording + Email System */}
+                {project.title === 'Video Recording + Email System' && (
+                  <div className="flex flex-col items-center mb-2">
+                    <img src={project.workflowDiagram || '/placeholder-workflow.png'} alt="System Workflow Diagram" style={{ width: 120, height: 80, objectFit: 'cover', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                    <span className="text-xs text-gray-400 mt-1" style={{ fontFamily: 'IBM Plex Mono, monospace' }}>Workflow Diagram</span>
+                  </div>
+                )}
+                {/* AWS S3 integration badge for Video Recording + Email System */}
+                {project.title === 'Video Recording + Email System' && project.s3Badge && (
+                  <div className="mb-2 flex items-center gap-2">
+                    <span className="px-2 py-1 rounded bg-[#FF9900] text-white font-bold text-xs" style={{ willChange: 'transform, opacity' }}>AWS S3 Integrated</span>
+                  </div>
+                )}
+                {/* Responsive video preview for Video Recording + Email System */}
+                {project.title === 'Video Recording + Email System' && (
+                  <div className="mb-2 flex justify-center">
+                    <img src={project.videoPreview || '/placeholder-video-preview.png'} alt="Video Preview" style={{ width: '100%', maxWidth: 220, height: 120, objectFit: 'cover', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                  </div>
+                )}
+                {/* Geolocation API indicator for Grocery Store Finder */}
+                {project.title === 'Grocery Store Finder' && project.geoApi && (
+                  <div className="mb-2 flex items-center gap-2">
+                    <span className="px-2 py-1 rounded bg-[#00A1F1] text-white font-bold text-xs" style={{ willChange: 'transform, opacity' }}>Geolocation API</span>
+                  </div>
+                )}
+                {/* Mobile-responsive preview for Grocery Store Finder */}
+                {project.title === 'Grocery Store Finder' && (
+                  <div className="mb-2 flex justify-center">
+                    <img src={project.mobilePreview || '/placeholder-mobile-preview.png'} alt="Mobile Preview" style={{ width: 120, height: 200, objectFit: 'cover', borderRadius: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                  </div>
+                )}
+                {/* GitHub code quality badge for Grocery Store Finder */}
+                {project.title === 'Grocery Store Finder' && (
+                  <div className="mb-2 flex items-center gap-2">
+                    <span className="px-2 py-1 rounded bg-green-500 text-white font-bold text-xs" style={{ willChange: 'transform, opacity' }}>Code Quality: {project.codeQuality}</span>
+                  </div>
+                )}
             </div>
           ))}
         </div>

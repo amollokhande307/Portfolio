@@ -13,7 +13,7 @@ interface SkillsProps {
   isDarkMode: boolean;
 }
 
-const Skills: React.FC<SkillsProps> = ({ isDarkMode }: SkillsProps) => {
+const Skills: React.FC<SkillsProps> = ({ isDarkMode }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -127,7 +127,7 @@ const Skills: React.FC<SkillsProps> = ({ isDarkMode }: SkillsProps) => {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-[#232F3E] to-[#007FFF] bg-clip-text text-transparent">
-              🛠️ Infrastructure Stack
+              🛠️ Infrastructure
             </span>
           </h2>
           <p className={`text-lg md:text-xl max-w-2xl mx-auto mb-8 ${
@@ -135,29 +135,6 @@ const Skills: React.FC<SkillsProps> = ({ isDarkMode }: SkillsProps) => {
           }`}>
             Enterprise-grade technologies powering scalable cloud solutions
           </p>
-
-          {/* AWS Console Style Metrics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            {[
-              { label: 'Uptime', value: '99.9%', color: 'text-green-500' },
-              { label: 'Deployments', value: '500+', color: 'text-[#007FFF]' },
-              { label: 'Containers', value: '1.2K', color: 'text-[#FF9900]' },
-              { label: 'Commits', value: '2.5K', color: 'text-purple-500' }
-            ].map((metric, index) => (
-              <div key={index} className={`p-4 rounded-lg border ${
-                isDarkMode 
-                  ? 'bg-slate-800 border-slate-700' 
-                  : 'bg-white border-gray-200 shadow-sm'
-              }`}>
-                <div className={`text-2xl font-bold ${metric.color}`}>{metric.value}</div>
-                <div className={`text-xs font-mono ${
-                  isDarkMode ? 'text-gray-400' : 'text-gray-600'
-                }`}>
-                  {metric.label}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Skills Grid with CloudWatch-style Metrics */}
@@ -165,7 +142,7 @@ const Skills: React.FC<SkillsProps> = ({ isDarkMode }: SkillsProps) => {
           {skills.map((skill, index) => (
             <div
               key={skill.name}
-              className={`group relative p-6 rounded-xl transition-all duration-500 hover:scale-105 hover:-translate-y-2 cursor-pointer ${
+              className={`skill-card group relative p-6 rounded-xl transition-all duration-500 hover:scale-105 hover:-translate-y-2 cursor-pointer ${
                 isDarkMode 
                   ? 'bg-slate-800 border border-slate-700 shadow-lg hover:shadow-2xl hover:shadow-blue-500/20' 
                   : 'bg-white border border-gray-200 shadow-lg hover:shadow-2xl hover:shadow-blue-500/20'
@@ -191,29 +168,16 @@ const Skills: React.FC<SkillsProps> = ({ isDarkMode }: SkillsProps) => {
                   {skill.category}
                 </div>
               </div>
-
-              {/* Skill Name */}
               <h3 className={`text-xl font-bold mb-2 group-hover:text-[#007FFF] transition-colors duration-300 ${
                 isDarkMode ? 'text-white' : 'text-gray-800'
               }`}>
                 {skill.name}
               </h3>
-              {/* Remove proficiency bar and percentage */}
-              {/* Expandable Description */}
               <div className={`text-xs leading-relaxed transition-all duration-300 ${
                 hoveredSkill === skill.name ? 'opacity-100 max-h-20' : 'opacity-70 max-h-12'
               } ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} overflow-hidden`}>
                 {skill.description}
               </div>
-
-              {/* Live Status Indicator */}
-              <div className="absolute top-4 right-4">
-                <div className={`w-3 h-3 rounded-full ${
-                  hoveredSkill === skill.name ? 'bg-green-500 animate-pulse' : 'bg-gray-400'
-                } transition-all duration-300`}></div>
-              </div>
-
-              {/* Hover Glow Effect */}
               <div className={`absolute inset-0 rounded-xl bg-gradient-to-r ${getSkillColor(skill.category)} opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none`}></div>
             </div>
           ))}
