@@ -63,7 +63,9 @@ const Resume: React.FC<ResumeProps> = ({ isDarkMode }) => {
           </p>
           
           {/* Download Button */}
-          <button
+          <a
+            href="/resume.pdf"
+            download
             className={`inline-flex items-center gap-3 px-8 py-4 rounded-xl font-medium transition-all duration-300 hover:scale-105 group ${
               isDarkMode 
                 ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-2xl hover:shadow-blue-500/25' 
@@ -73,7 +75,7 @@ const Resume: React.FC<ResumeProps> = ({ isDarkMode }) => {
             <Download size={20} className="group-hover:animate-bounce" />
             <span>Download Resume</span>
             <ExternalLink size={16} className="group-hover:translate-x-1 transition-transform duration-200" />
-          </button>
+          </a>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">

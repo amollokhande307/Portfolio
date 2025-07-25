@@ -58,7 +58,7 @@ const Blogs: React.FC<BlogsProps> = ({ isDarkMode }) => {
     {
       title: 'Why Enterprises Trust Linux',
       description: 'Security and reliability analysis: Comprehensive study of Linux adoption in Fortune 500 companies and enterprise security frameworks.',
-      linkedinUrl: '#',
+      linkedinUrl: 'https://www.linkedin.com/posts/amol-lokhande-382976361_vimal-vimal-linuxworld-activity-7349371583548813312-SDTG',
       date: 'Jan 2025',
       readTime: '10 min read',
       category: 'Systems',
@@ -69,7 +69,7 @@ const Blogs: React.FC<BlogsProps> = ({ isDarkMode }) => {
     {
       title: 'Linux Customization Guide',
       description: 'Production environment optimization: Complete guide to enterprise Linux customization, performance tuning, and security hardening.',
-      linkedinUrl: '#',
+      linkedinUrl: 'https://www.linkedin.com/posts/amol-lokhande-382976361_linux-customization-desktoptheming-activity-7349663811089371136-Ajrd',
       date: 'Jan 2025',
       readTime: '12 min read',
       category: 'Systems',
@@ -80,7 +80,7 @@ const Blogs: React.FC<BlogsProps> = ({ isDarkMode }) => {
     {
       title: 'Ctrl+C vs. Ctrl+Z Explained',
       description: 'Process management fundamentals: Technical deep-dive into Linux signal handling, process control, and system administration best practices.',
-      linkedinUrl: '#',
+      linkedinUrl: 'https://www.linkedin.com/posts/amol-lokhande-382976361_linux-unix-systemprogramming-activity-7350135860282978305-zwXv',
       date: 'Jan 2025',
       readTime: '5 min read',
       category: 'Systems',
@@ -173,7 +173,7 @@ const Blogs: React.FC<BlogsProps> = ({ isDarkMode }) => {
     {
       title: 'AWS Neptune Introduction',
       description: 'A deep dive into AWS Neptune: graph database architecture, performance, and real-world use cases.',
-      linkedinUrl: 'https://www.linkedin.com/posts/aws-neptune-introduction',
+      linkedinUrl: 'https://www.linkedin.com/posts/amol-lokhande-382976361_awscloud-awsneptune-linuxworldmentorship-activity-7351516522013503490-1w1X',
       date: 'Mar 2025',
       readTime: '10 min read',
       category: 'Cloud',
