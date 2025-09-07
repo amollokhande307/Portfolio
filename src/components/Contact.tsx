@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Mail, Github, Linkedin, Instagram, Send, MapPin, Phone } from 'lucide-react';
+import { Mail, Github, Linkedin, Instagram, Send, MapPin } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 interface ContactProps {
   isDarkMode: boolean;
@@ -14,6 +15,12 @@ const Contact: React.FC<ContactProps> = ({ isDarkMode }) => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [statusType, setStatusType] = useState<'success' | 'error' | null>(null);
+
+  const isValidEmail = (value: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -25,21 +32,60 @@ const Contact: React.FC<ContactProps> = ({ isDarkMode }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setStatusMessage(null);
+    setStatusType(null);
+
+    // Basic validation
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      setStatusMessage('Please fill out all required fields.');
+      setStatusType('error');
+      return;
+    }
+
+    if (!isValidEmail(formData.email)) {
+      setStatusMessage('Please enter a valid email address.');
+      setStatusType('error');
+      return;
+    }
+
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
-    
-    setIsSubmitting(false);
-    alert('Thank you for your message! I\'ll get back to you soon.');
+
+    try {
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID as string;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string;
+
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error('Email service is not configured.');
+      }
+
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message
+        },
+        { publicKey }
+      );
+
+      setStatusMessage("Thank you! Your message has been sent.");
+      setStatusType('success');
+
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error) {
+      setStatusMessage('Sorry, something went wrong. Please try again later.');
+      setStatusType('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const socialLinks = [
@@ -93,6 +139,15 @@ const Contact: React.FC<ContactProps> = ({ isDarkMode }) => {
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              {statusMessage && (
+                <div className={`p-3 rounded-md text-sm ${
+                  statusType === 'success'
+                    ? 'bg-green-50 text-green-700 border border-green-200'
+                    : 'bg-red-50 text-red-700 border border-red-200'
+                }`}>
+                  {statusMessage}
+                </div>
+              )}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="relative">
                   <input

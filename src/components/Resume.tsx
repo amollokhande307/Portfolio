@@ -6,6 +6,40 @@ interface ResumeProps {
 }
 
 const Resume: React.FC<ResumeProps> = ({ isDarkMode }) => {
+  const handleResumeDownload = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    try {
+      e.preventDefault();
+      const candidatePaths = [
+        '/AMOL-Lokhande-FlowCV-Resume-20250907 (1).pdf',
+        '/resume.pdf'
+      ];
+
+      let response: Response | null = null;
+      for (const path of candidatePaths) {
+        const res = await fetch(encodeURI(path), { cache: 'no-store' });
+        if (res.ok) {
+          response = res;
+          break;
+        }
+      }
+
+      if (!response) throw new Error('Resume file not found');
+
+      const arrayBuffer = await response.arrayBuffer();
+      const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'AMOL-Lokhande-FlowCV-Resume-20250907 (1).pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      // Fallback to default anchor behavior if fetch fails
+      window.location.href = '/resume.pdf';
+    }
+  };
   const education = {
     degree: 'Bachelor of Computer Science (BCS)',
     university: 'MGM University',
@@ -65,7 +99,8 @@ const Resume: React.FC<ResumeProps> = ({ isDarkMode }) => {
           {/* Download Button */}
           <a
             href="/resume.pdf"
-            download
+            download="Amol-Lokhande-Resume.pdf"
+            onClick={handleResumeDownload}
             className={`inline-flex items-center gap-3 px-8 py-4 rounded-xl font-medium transition-all duration-300 hover:scale-105 group ${
               isDarkMode 
                 ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-2xl hover:shadow-blue-500/25' 
